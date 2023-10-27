@@ -11,6 +11,7 @@ const sr = new Recognition(); //** speech recognition (sr) */
 onMounted(() => {
   sr.continuous = true;
   sr.interimResults = true;
+  sr.lang = "en-US";
 
   sr.onstart = () => {
     // console.log("SR started");
