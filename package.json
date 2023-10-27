@@ -1,0 +1,20 @@
+{
+  "name": "speach-to-text",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.2",
+    "vue": "^3.3.4"
+  },
+  "devDependencies": {
+    "@iconify/vue": "^4.1.1",
+    "@vitejs/plugin-vue": "^4.4.0",
+    "vite": "^4.4.11"
+  }
+}
