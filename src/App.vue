@@ -82,7 +82,7 @@ const toggleReadOnly = () => (isReadOnly.value = !isReadOnly.value);
         </div>
       </div>
 
-      <div class="col-6 pb-3 bg-light position-relative" style="height: 78vh;overflow-y: scroll;">
+      <div class="col-12 col-md-6 col-sm-6 pb-3 bg-light position-relative" style="height: 78vh;overflow-y: scroll;">
         <textarea type="text" ref="textarea" v-model="transcript" rows="1"
           class="form-control form-control-sm my-2 resize-none" :readonly="!isReadOnly" @dblclick="toggleReadOnly"
           @blur="toggleReadOnly"></textarea>
@@ -96,7 +96,7 @@ const toggleReadOnly = () => (isReadOnly.value = !isReadOnly.value);
         </div>
       </div>
 
-      <div class="col-6 mx-auto bg-secondary pb-3" style="height: 78vh;overflow-y: scroll;">
+      <div class="col-12 col-md-6 col-sm-6 mx-auto bg-secondary pb-3" style="height: 78vh;overflow-y: scroll;">
         <ul class="list-group mt-2" data-bs-theme="light">
           <li class="list-group-item list-group-item-primary">Medical Condition</li>
           <li class="list-group-item">
