@@ -27,7 +27,9 @@ onMounted(() => {
     for (let i = 0; i < evt.results.length; i++) {
       const result = evt.results[i];
       adjustTextareaHeight();
-      if (result.isFinal) checkForCommand(result);
+      if (result.isFinal) {
+        checkForCommand(result);
+      }
     }
 
     const trans = Array.from(evt.results)
@@ -47,6 +49,25 @@ const checkForCommand = (result) => {
     sr.stop();
     alert(new Date().toLocaleTimeString());
     setTimeout(() => sr.start(), 100);
+  }
+};
+
+const speak = () => {
+  if ("speechSynthesis" in window) {
+    const speechSynthesis = window.speechSynthesis;
+    let utterance = null
+
+    if (transcript.value == '') {
+      utterance = new SpeechSynthesisUtterance("There's nothing to talk about.");
+    } else {
+      utterance = new SpeechSynthesisUtterance(transcript.value);
+    }
+    // Optionally, you can configure voice settings here
+    utterance.voice = speechSynthesis.getVoices()[6]; // Example voice selection
+
+    speechSynthesis.speak(utterance);
+  } else {
+    console.error("Speech synthesis is not supported in this browser.");
   }
 };
 
@@ -79,11 +100,16 @@ const toggleReadOnly = () => (isReadOnly.value = !isReadOnly.value);
           @blur="toggleReadOnly"></textarea>
 
         <div class="position-absolute bottom-0 end-0 m-1">
-          <button type="button" class="btn d-block mx-auto rounded-circle"
-            :class="[!isRecording ? 'btn-primary' : 'btn-danger']" @click="toggleMic" style="width: 60px; height: 60px">
-            <Icon icon="bi:mic" style="font-size: 1.2rem" />
-            <small>{{ !isRecording ? "Start" : "Stop" }}</small>
-          </button>
+          <div class="d-flex align-items-center justify-content-center">
+            <button type="button" class="btn d-flex align-items-center me-1 rounded-circle"
+              :class="[!isRecording ? 'btn-primary' : 'btn-danger']" @click="toggleMic" style="width: 40px; height: 40px">
+              <Icon icon="bi:mic" style="font-size: 1rem" />
+            </button>
+            <button type="button" class="btn btn-dark d-flex align-items-center rounded-circle" @click="speak"
+              style="width: 40px; height: 40px">
+              <Icon icon="ri:speak-line" style="font-size: 1rem" />
+            </button>
+          </div>
         </div>
       </div>
 
