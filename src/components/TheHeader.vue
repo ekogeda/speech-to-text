@@ -8,8 +8,8 @@
       </a>
       <div>
         <router-link to="/" class="btn">Home</router-link>
-        <router-link to="/about" class="btn">V2</router-link>
-        <router-link to="/v3" class="btn">V3</router-link>
+        <!-- <router-link to="/about" class="btn">V2</router-link>
+        <router-link to="/v3" class="btn">V3</router-link> -->
         <button class="btn">Login</button>
       </div>
     </div>
