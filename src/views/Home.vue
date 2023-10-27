@@ -4,9 +4,11 @@ import { ref, onMounted } from "vue";
 
 const transcript = ref("");
 const isRecording = ref(false);
+const isSpeaking = ref(false);
 
 const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const sr = new Recognition(); //** speech recognition (sr) */
+const speechSynthesis = window.speechSynthesis;
 
 onMounted(() => {
   sr.continuous = true;
@@ -14,17 +16,14 @@ onMounted(() => {
   sr.lang = "en-US";
 
   sr.onstart = () => {
-    // console.log("SR started");
     isRecording.value = true;
   };
 
   sr.onend = () => {
-    // console.log("SR stopped");
     isRecording.value = false;
   };
 
   sr.onresult = (evt) => {
-    // console.log(Array.from(evt.results));
     for (let i = 0; i < evt.results.length; i++) {
       const result = evt.results[i];
       adjustTextareaHeight();
@@ -55,10 +54,9 @@ const checkForCommand = (result) => {
 
 const speak = () => {
   if ("speechSynthesis" in window) {
-    const speechSynthesis = window.speechSynthesis;
-    let utterance = null
+    let utterance = null;
 
-    if (transcript.value == '') {
+    if (transcript.value == "") {
       utterance = new SpeechSynthesisUtterance("There's nothing to talk about.");
     } else {
       utterance = new SpeechSynthesisUtterance(transcript.value);
@@ -79,6 +77,11 @@ const adjustTextareaHeight = () => {
 };
 
 const toggleMic = () => (isRecording.value ? sr.stop() : sr.start());
+
+const toggleSpeech = () => {
+  isSpeaking.value = !isSpeaking.value
+  isSpeaking.value ? speak() : speechSynthesis.cancel();
+}
 
 const isReadOnly = ref(false);
 const toggleReadOnly = () => (isReadOnly.value = !isReadOnly.value);
@@ -106,8 +109,8 @@ const toggleReadOnly = () => (isReadOnly.value = !isReadOnly.value);
               :class="[!isRecording ? 'btn-primary' : 'btn-danger']" @click="toggleMic" style="width: 40px; height: 40px">
               <Icon icon="bi:mic" style="font-size: 1rem" />
             </button>
-            <button type="button" class="btn btn-dark d-flex align-items-center rounded-circle" @click="speak"
-              style="width: 40px; height: 40px">
+            <button type="button" class="btn d-flex align-items-center rounded-circle"
+              :class="[!isSpeaking ? 'btn-dark' : 'btn-danger']" @click="toggleSpeech" style="width: 40px; height: 40px">
               <Icon icon="ri:speak-line" style="font-size: 1rem" />
             </button>
           </div>
